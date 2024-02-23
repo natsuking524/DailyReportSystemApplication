@@ -108,7 +108,7 @@ public class EmployeeController {
             model.addAttribute("employee", employeeService.findByCode(code));
             return detail(code, model);
         }
-
+//日報削除処理
         return "redirect:/employees";
     }
 

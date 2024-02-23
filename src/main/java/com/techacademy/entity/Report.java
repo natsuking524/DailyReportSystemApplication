@@ -8,6 +8,7 @@ import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +21,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -34,15 +36,20 @@ public class Report {
     private Integer id;
 
     // 日付
+    @NotNull
     @Column(nullable = false)
-    private LocalDate report_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reportDate;
 
     // タイトル
+    @NotEmpty
+    @Length(max = 100)
     @Column(length = 100, nullable = false)
     private String title;
 
     // 内容
-    @Column()
+    @NotEmpty
+    @Column(nullable = false)
     private String content;
 
     //従業員

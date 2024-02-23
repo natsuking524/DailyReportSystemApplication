@@ -44,6 +44,10 @@ public class ReportService {
     // 日報更新
     @Transactional
     public ErrorKinds update(Report report) {
+        Report original=findById(report.getId());
+        report.setCreatedAt(original.getCreatedAt());
+        report.setEmployee(original.getEmployee());
+        report.setDeleteFlg(false);
         LocalDateTime now = LocalDateTime.now();
         report.setUpdatedAt(now);
 
@@ -54,6 +58,10 @@ public class ReportService {
     // 日報削除
     @Transactional
     public ErrorKinds delete(Integer id) {
+        Report report = findById(id);
+        LocalDateTime now = LocalDateTime.now();
+        report.setUpdatedAt(now);
+        report.setDeleteFlg(true);
 
         return ErrorKinds.SUCCESS;
     }
@@ -74,8 +82,8 @@ public class ReportService {
     @Transactional
     public Report saveReport(Report report, UserDetail userDetail) {
         report.setEmployee(userDetail.getEmployee());
-        if (report.getReport_date() == null) {
-            report.setReport_date(LocalDate.now());
+        if (report.getReportDate() == null) {
+            report.setReportDate(LocalDate.now());
         }
         LocalDateTime now = LocalDateTime.now();
         report.setCreatedAt(now);

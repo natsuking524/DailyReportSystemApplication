@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="h-100" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common/header :: head_fragment(title=日報新規登録)"></head>
+<head th:replace="common/header :: head_fragment(title=日報更新)"></head>
 
 <body class="h-100 overflow-hidden">
     <div class="row h-100">
@@ -12,14 +12,15 @@
         <div class="mt-3 h-100 col-sm-10">
             <!-- コンテンツ -->
             <div class="container-fluid p-0">
-                <h1 class="h3 mb-3">日報 新規登録</h1>
+                <h1 class="h3 mb-3">日報 更新</h1>
             </div>
             <div class="col-12 col-xxl-6">
 
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/reports/add}" th:object="${report}" th:method="post">
+                            <form th:action="@{/reports/update}" th:object="${report}" th:method="post">
+                            <input type="hidden" th:field="*{id}" >
                                 <div class="wizard wizard-success mb-4">
                                     <div class="mb-3">
                                         <label class="form-label" for="code">日付</label>
@@ -34,7 +35,9 @@
                                         <label class="form-label" for="name">氏名</label>
                                         <p class="mb-1"></p>
                                         <div class="col-md-7">
-                                        <span th:text="${employeeName}"></span>
+                                        <span th:text="${report.employee.name}"></span>
+                                        <input type="hidden" th:field="${report.employee.name}" >
+                                        <input type="hidden" th:field="${report.employee.code}" >
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -67,6 +70,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
