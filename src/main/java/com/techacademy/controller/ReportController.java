@@ -69,12 +69,17 @@ public class ReportController {
     @PostMapping(value = "/add")
     public String add(@Validated Report report, BindingResult res, @AuthenticationPrincipal UserDetail userDetail,
             Model model) {
+        report.setEmployee(userDetail.getEmployee());
         if (res.hasErrors()) {
             // エラーあり
             return create(report, userDetail, model);
         }
         // employee登録
-        reportService.saveReport(report, userDetail);
+        ErrorKinds result = reportService.save(report);
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+            return create(report, userDetail, model);
+        }
         // 一覧画面にリダイレクト
         return "redirect:/reports";
     }
@@ -113,9 +118,8 @@ public class ReportController {
         if (res.hasErrors()) {
             return edit(null,userDetail,model,report);
         }
-             // パスワードが空白だった場合
-         ErrorKinds result = null;
-            result = reportService.update(report);
+             //
+         ErrorKinds result = reportService.update(report);
 
         if (ErrorMessage.contains(result)) {
             model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));

@@ -25,6 +25,9 @@ public class ErrorMessage {
             // 従業員番号重複チェック用エラーメッセージ
             put(ErrorKinds.DUPLICATE_EXCEPTION_ERROR,
                     new ArrayList<String>(Arrays.asList("codeError", "既に登録されている社員番号です")));
+         // 既に登録されている日付エラーメッセージ
+            put(ErrorKinds.ALREADY_EXISTING_DATE_ERROR,
+                    new ArrayList<String>(Arrays.asList("alreadyDateError", "既に登録されている日付です")));
             // 従業員番号重複チェック(例外)用エラーメッセージ
             put(ErrorKinds.DUPLICATE_ERROR, new ArrayList<String>(Arrays.asList("codeError", "既に登録されている社員番号です")));
             // ログイン中の従業員削除チェック用エラーメッセージ

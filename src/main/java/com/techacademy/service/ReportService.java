@@ -30,7 +30,10 @@ public class ReportService {
     // 日報保存
     @Transactional
     public ErrorKinds save(Report report) {
-
+        // 従業員と日付チェック
+        if (reportRepository.existsByEmployeeAndReportDate(report.getEmployee(),report.getReportDate())) {
+            return ErrorKinds.ALREADY_EXISTING_DATE_ERROR;
+        }
         report.setDeleteFlg(false);
 
         LocalDateTime now = LocalDateTime.now();
@@ -45,6 +48,9 @@ public class ReportService {
     @Transactional
     public ErrorKinds update(Report report) {
         Report original=findById(report.getId());
+        if (reportRepository.existsByEmployeeAndReportDateAndIdNot(report.getEmployee(),report.getReportDate(),report.getId())) {
+            return ErrorKinds.ALREADY_EXISTING_DATE_ERROR;
+        }
         report.setCreatedAt(original.getCreatedAt());
         report.setEmployee(original.getEmployee());
         report.setDeleteFlg(false);

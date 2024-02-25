@@ -49,6 +49,7 @@ public class Report {
 
     // 内容
     @NotEmpty
+    @Length(max = 600)
     @Column(nullable = false)
     private String content;
 
